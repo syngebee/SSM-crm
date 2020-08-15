@@ -121,4 +121,23 @@ public class User {
     public void setEditBy(String editBy) {
         this.editBy = editBy;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id='" + id + '\'' +
+                ", loginAct='" + loginAct + '\'' +
+                ", loginPwd='" + loginPwd + '\'' +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", deptno='" + deptno + '\'' +
+                ", expireTime='" + expireTime + '\'' +
+                ", lockState='" + lockState + '\'' +
+                ", allowIps='" + allowIps + '\'' +
+                ", createTime='" + createTime + '\'' +
+                ", createBy='" + createBy + '\'' +
+                ", editTime='" + editTime + '\'' +
+                ", editBy='" + editBy + '\'' +
+                '}';
+    }
 }

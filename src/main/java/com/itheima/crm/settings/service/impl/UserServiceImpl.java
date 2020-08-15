@@ -3,10 +3,12 @@ package com.itheima.crm.settings.service.impl;
 import com.itheima.crm.settings.dao.UserDao;
 import com.itheima.crm.settings.pojo.User;
 import com.itheima.crm.settings.service.UserService;
+import com.itheima.crm.utils.DateTimeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import java.util.Date;
 
+@Service
 public class UserServiceImpl implements UserService {
 
     @Autowired
@@ -27,17 +29,13 @@ public class UserServiceImpl implements UserService {
 
 
         //失效时间大于现在时间, 验证不通过
-        if (expireTime.compareTo(new Date().toString())>0) return false;
+        String now = DateTimeUtil.getSysTime();
+        if (now.compareTo(expireTime)>0) return false;
 
         //状态为锁定,验证不通过
-        if (lockState.equals("0")) return false;
+        if ("0".equals(lockState)) return false;
 
         //IP地址不允许,验证不通过
-        String[] ips = allowIps.split(",");
-        Boolean result = false;
-        for (String s : ips) {
-            if (ip.equals(s)) result=true;
-        }
-        return result;
+        return allowIps.contains(ip);
     }
 }
