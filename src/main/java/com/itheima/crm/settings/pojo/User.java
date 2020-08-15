@@ -1,17 +1,38 @@
 package com.itheima.crm.settings.pojo;
 
 public class User {
-    private String name;
-    private String loginPwd;
-    private String email;
-    private String expireTime;
-    private String lockState;
-    private String deptno;
-    private String allowIps;
-    private String createTime;
-    private String createBy;
-    private String editTime;
-    private String editBy;
+    private String id;          //编号,主键
+    private String loginAct;    //登录账号
+    private String loginPwd;    //登录密码
+
+    private String name;        //姓名
+    private String email;       //邮箱
+    private String deptno;      //部门编号
+
+    private String expireTime;  //失效时间  19位固定char
+    private String lockState;   //锁定状态  0表示锁定 1表示启用
+    private String allowIps;    //允许访问的ip地址
+
+    private String createTime;  //创建时间  19位固定char
+    private String createBy;    //创建人
+    private String editTime;    //修改时间  19位固定char
+    private String editBy;      //修改人
+
+    public String getLoginAct() {
+        return loginAct;
+    }
+
+    public void setLoginAct(String loginAct) {
+        this.loginAct = loginAct;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
