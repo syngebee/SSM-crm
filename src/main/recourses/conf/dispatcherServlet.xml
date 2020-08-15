@@ -9,4 +9,4 @@
     <!--注解驱动-->
     <mvc:annotation-driven/>
     <mvc:resources mapping="/static/**" location="/static/"/>
-        </beans>
+</beans>
