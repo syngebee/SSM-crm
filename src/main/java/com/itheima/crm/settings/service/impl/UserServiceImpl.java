@@ -42,14 +42,13 @@ public class UserServiceImpl implements UserService {
 
         //IP地址不允许,验证不通过
         allowIps=user.getAllowIps();
-        if (allowIps==null){
-            throw new LoginException("不被允许的IP地址,请联系管理员");
-        }else {
-            //allowIps如果为""代表不需要验证,所以当不等于"" 且 ip不包含在内时抛异常
-            if (!allowIps.equals("") && !allowIps.contains(ip)){
+        //allowIps 不等空 且 不等"" 才需要判断 , 不然默认放行
+        if (allowIps!=null && !"".equals(allowIps)){
+            if(!allowIps.contains(ip)){
                 throw new LoginException("不被允许的IP地址,请联系管理员");
             }
         }
+
         return user;
     }
 }
