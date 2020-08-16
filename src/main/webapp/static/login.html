@@ -14,11 +14,11 @@
 					url:"/loginController",
 					type:"post",
 					data:dataLogin,
-                    dataType:"text",
-					success:function (msg) {
-					    // alert(msg);
-					    if (msg === "登录成功") location.href="./workbench/index.html";
-					    $("#msg").text(msg);
+                    dataType:"json",
+					success:function (map) {
+					    alert(map);
+					    if (map.success) location.href="./workbench/index.html";
+					    $("#msg").text(map.msg);
                     },
 					error:function () {}
 
