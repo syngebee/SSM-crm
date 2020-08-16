@@ -21,8 +21,8 @@ public class UserServiceImpl implements UserService {
         String md5Pwd = MD5Util.getMD5(loginPwd);
 
         User user = userdao.login(loginAct, md5Pwd);
-        String expireTime=null;
-        String allowIps=null;
+        String expireTime;
+        String allowIps;
         //空值判断
         if(user==null) throw new LoginException("用户名密码错误");
 
@@ -30,16 +30,26 @@ public class UserServiceImpl implements UserService {
         //失效时间大于现在时间, 验证不通过
         expireTime=user.getExpireTime();
         String now = DateTimeUtil.getSysTime();
-        if (expireTime==null || now.compareTo(expireTime)>0) throw new LoginException("该账号已失效,请联系管理员");
+        if (expireTime==null || now.compareTo(expireTime)>0) {
+            throw new LoginException("该账号已失效,请联系管理员");
+        }
 
         //状态为锁定,验证不通过
         String lockState=user.getLockState();
-        if ("0".equals(lockState)) throw new LoginException("此账号已锁定,请联系管理员");
+        if ("0".equals(lockState)) {
+            throw new LoginException("此账号已锁定,请联系管理员");
+        }
 
         //IP地址不允许,验证不通过
         allowIps=user.getAllowIps();
-        if (allowIps==null || !allowIps.contains(ip)) throw new LoginException("不被允许的IP地址,请联系管理员");
-
+        if (allowIps==null){
+            throw new LoginException("不被允许的IP地址,请联系管理员");
+        }else {
+            //allowIps如果为""代表不需要验证,所以当不等于"" 且 ip不包含在内时抛异常
+            if (!allowIps.equals("") && !allowIps.contains(ip)){
+                throw new LoginException("不被允许的IP地址,请联系管理员");
+            }
+        }
         return user;
     }
 }

@@ -31,14 +31,15 @@ public class myController {
 
         //返回对象Map
         Map<String, Object> map = new HashMap<>();
-        //初始化提示信息内容为""
+
+        //初始化提示信息内容为"" 成功状态为false
         String msg="";
         Boolean flag = false;
 
         //抓取service层抛出的异常 --后期全局异常处理类咋办?
         try {
-            User user = userService.login(username, password, "192.168.1.1");  //测试用,ip地址写死
-//            User user = userService.login(username, password, ip);
+//            User user = userService.login(username, password, "192.168.1.1");  //测试用,ip地址写死
+            User user = userService.login(username, password, ip);
 
             //没报异常, user塞入session,更改成功状态
             session.setAttribute("usr",user);

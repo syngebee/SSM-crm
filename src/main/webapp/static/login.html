@@ -16,7 +16,6 @@
 					data:dataLogin,
                     dataType:"json",
 					success:function (map) {
-					    alert(map);
 					    if (map.success) location.href="./workbench/index.html";
 					    $("#msg").text(map.msg);
                     },
