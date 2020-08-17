@@ -6,4 +6,9 @@
     <select id="login" resultType="com.itheima.crm.settings.pojo.User">
         SELECT * FROM tbl_user WHERE loginAct=#{loginAct} AND loginPwd=#{loginPwd};
     </select>
+
+    <select id="getUsers" resultType="com.itheima.crm.settings.pojo.User">
+        SELECT `id`,`loginAct`,`name`,`loginPwd`,`email`,`expireTime`,`lockState`,`deptno`,
+        `allowIps`,`createTime`,`createBy`,`editTime`,`editBy` FROM tbl_user
+    </select>
 </mapper>

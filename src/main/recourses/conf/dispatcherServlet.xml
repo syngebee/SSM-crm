@@ -6,6 +6,7 @@
 
     <!--注解扫描器-->
     <context:component-scan base-package="com.itheima.crm.settings.web.controller"/>
+    <context:component-scan base-package="com.itheima.crm.workbench.web.controller"/>
     <!--注解驱动-->
     <mvc:annotation-driven/>
     <mvc:resources mapping="/static/**" location="/static/"/>
@@ -16,7 +17,7 @@
             <mvc:exclude-mapping path="/static/*.html"/>
             <mvc:exclude-mapping path="/static/jquery/**"/>
             <mvc:exclude-mapping path="/static/image/**"/>
-            <mvc:exclude-mapping path="/controller/loginController"/>
+            <mvc:exclude-mapping path="/loginController"/>
             <bean class="com.itheima.crm.settings.web.handler.myInterceptor"/>
         </mvc:interceptor>
     </mvc:interceptors>

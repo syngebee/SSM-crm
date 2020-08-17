@@ -14,14 +14,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Controller
-public class myController {
+public class SettingController {
 
     @Autowired
     private UserService userService;
 
 //    @RequestMapping(value="/loginController",produces="text/plain;charset=utf-8")
     @ResponseBody
-    @RequestMapping(value="/controller/loginController")
+    @RequestMapping(value="/loginController")
     public Map<String,Object> login(String username, String password, HttpServletRequest req){
         //获取session对象
         HttpSession session = req.getSession();
