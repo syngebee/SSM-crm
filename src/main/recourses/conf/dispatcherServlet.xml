@@ -9,4 +9,16 @@
     <!--注解驱动-->
     <mvc:annotation-driven/>
     <mvc:resources mapping="/static/**" location="/static/"/>
+
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <mvc:exclude-mapping path="/static/*.html"/>
+            <mvc:exclude-mapping path="/static/jquery/**"/>
+            <mvc:exclude-mapping path="/static/image/**"/>
+            <mvc:exclude-mapping path="/controller/loginController"/>
+            <bean class="com.itheima.crm.settings.web.handler.myInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
+
 </beans>

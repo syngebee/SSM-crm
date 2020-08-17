@@ -21,7 +21,7 @@ public class myController {
 
 //    @RequestMapping(value="/loginController",produces="text/plain;charset=utf-8")
     @ResponseBody
-    @RequestMapping(value="/loginController")
+    @RequestMapping(value="/controller/loginController")
     public Map<String,Object> login(String username, String password, HttpServletRequest req){
         //获取session对象
         HttpSession session = req.getSession();
@@ -42,7 +42,7 @@ public class myController {
             User user = userService.login(username, password, ip);
 
             //没报异常, user塞入session,更改成功状态
-            session.setAttribute("usr",user);
+            session.setAttribute("user",user);
             flag=true;
 
         } catch (LoginException e) {
