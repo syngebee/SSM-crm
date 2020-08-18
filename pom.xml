@@ -130,6 +130,13 @@
       <version>2.4</version>
     </dependency>
 
+    <!--分页插件-->
+    <dependency>
+      <groupId>com.github.pagehelper</groupId>
+      <artifactId>pagehelper</artifactId>
+      <version>5.1.10</version>
+    </dependency>
+
   </dependencies>
 
   <build>
@@ -153,6 +160,8 @@
         <filtering>false</filtering>
       </resource>
     </resources>
+
+
 
     <!--指定jdk的版本
         双保险钉死jdk版本-->

@@ -63,10 +63,9 @@ request.getServerPort()+request.getContextPath()+"/";
 				},
 				//{"success":true/false}
 				success:function (data) {
-				    alert(data);
 				    if (data){
 				        //添加成功后，刷新活动列表（ajax局部刷新）
-
+						pageList();
 						//关闭模态窗口
 						$("#createActivityModal").modal("hide")
 					} else{
@@ -80,8 +79,54 @@ request.getServerPort()+request.getContextPath()+"/";
 
 		$("#editBtn").click(function () {
 			$("#editActivityModal").modal("show");
+        });
+
+		//页面加载完毕后 展现列表 pageList(pageNo,pageSize)
+		pageList(1,2);
+
+		$("#searchBtn").click(function () {
+			pageList(1,2);
         })
+
 	});
+
+	//点击市场活动,页面加载时
+	//点击页码
+	//保存修改后
+	//删除后
+	//修改后
+	//查询
+    function pageList(pageNo,pageSize){
+		$.ajax({
+				   url:"/Activity/pageList",
+				   type:"get",
+				   data:{
+				       "pageNo":pageNo,
+					   "pageSize":pageSize,
+					   "name":$.trim($("#search-name").val()),
+					   "owner":$.trim($("#search-owner").val()),
+					   "startDate":$.trim($("#search-startDate").val()),
+					   "endDate":$.trim($("#search-endDate").val())
+				   },
+				   success:function (data) {
+				       //需要一个list和数据的总数
+					   //{"total":100,"dataList":[{市场活动1},{2},{3}]}
+					   let dataList = data.dataList;
+					   let html="";
+				       $.each(dataList,function (index, element) {
+						   html+='<tr class="active">';
+                           html+='<td><input type="checkbox" value="'+element.id+'" /></td>';
+                           html+='<td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href=\'static/workbench/activity/detail.jsp\';">'+element.name+'</a></td>';
+                           html+='<td>'+element.owner+'</td>';
+                           html+='<td>'+element.startDate+'</td>';
+                           html+='<td>'+element.endDate+'</td>'
+                       });
+					   $("#activityBody").html(html);
+				   },
+				   error:function () {},
+				   dataType:"json"
+				})
+    }
 	
 </script>
 </head>
@@ -229,14 +274,14 @@ request.getServerPort()+request.getContextPath()+"/";
 				  <div class="form-group">
 				    <div class="input-group">
 				      <div class="input-group-addon">名称</div>
-				      <input class="form-control" type="text">
+				      <input class="form-control" type="text" id="search-name">
 				    </div>
 				  </div>
 				  
 				  <div class="form-group">
 				    <div class="input-group">
 				      <div class="input-group-addon">所有者</div>
-				      <input class="form-control" type="text">
+				      <input class="form-control" type="text" id="search-owner">
 				    </div>
 				  </div>
 
@@ -244,17 +289,17 @@ request.getServerPort()+request.getContextPath()+"/";
 				  <div class="form-group">
 				    <div class="input-group">
 				      <div class="input-group-addon">开始日期</div>
-					  <input class="form-control" type="text" id="startTime" />
+					  <input class="form-control" type="text" id="search-startTime" />
 				    </div>
 				  </div>
 				  <div class="form-group">
 				    <div class="input-group">
 				      <div class="input-group-addon">结束日期</div>
-					  <input class="form-control" type="text" id="endTime">
+					  <input class="form-control" type="text" id="search-endTime">
 				    </div>
 				  </div>
 				  
-				  <button type="submit" class="btn btn-default">查询</button>
+				  <button type="button" class="btn btn-default" id="searchBtn">查询</button>
 				  
 				</form>
 			</div>
@@ -278,21 +323,14 @@ request.getServerPort()+request.getContextPath()+"/";
 							<td>结束日期</td>
 						</tr>
 					</thead>
-					<tbody>
-						<tr class="active">
+					<tbody  id="activityBody">
+<%--						<tr class="active">
 							<td><input type="checkbox" /></td>
 							<td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href='static/workbench/activity/detail.jsp';">发传单</a></td>
                             <td>zhangsan</td>
 							<td>2020-10-10</td>
 							<td>2020-10-20</td>
-						</tr>
-                        <tr class="active">
-                            <td><input type="checkbox" /></td>
-                            <td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href='static/workbench/activity/detail.jsp';">发传单</a></td>
-                            <td>zhangsan</td>
-                            <td>2020-10-10</td>
-                            <td>2020-10-20</td>
-                        </tr>
+						</tr>--%>
 					</tbody>
 				</table>
 			</div>

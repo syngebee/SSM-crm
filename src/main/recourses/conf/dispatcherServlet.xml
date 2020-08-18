@@ -18,7 +18,7 @@
             <mvc:exclude-mapping path="/static/jquery/**"/>
             <mvc:exclude-mapping path="/static/image/**"/>
             <mvc:exclude-mapping path="/loginController"/>
-            <bean class="com.itheima.crm.settings.web.handler.myInterceptor"/>
+            <bean class="com.itheima.crm.settings.web.handler.MyInterceptor"/>
         </mvc:interceptor>
     </mvc:interceptors>
 

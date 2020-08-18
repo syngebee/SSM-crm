@@ -6,6 +6,8 @@ import com.itheima.crm.utils.DateTimeUtil;
 import com.itheima.crm.utils.UUIDUtil;
 import com.itheima.crm.workbench.pojo.Activity;
 import com.itheima.crm.workbench.service.ActivityService;
+import com.itheima.crm.workbench.vo.ActivityRequestVO;
+import com.itheima.crm.workbench.vo.PaginationVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,7 +33,7 @@ public class ActivityController {
         return userService.getUsers();
     }
 
-    @RequestMapping(value="/save")
+    @RequestMapping("/save")
     @ResponseBody
     public Boolean saveUser(Activity a, HttpServletRequest request){
         HttpSession session = request.getSession();
@@ -45,5 +47,11 @@ public class ActivityController {
 
         return activityService.save(a);
 
+    }
+
+    @RequestMapping("/Activity/pageList")
+    @ResponseBody
+    public PaginationVO pageList(ActivityRequestVO aVo){
+        return null;
     }
 }
