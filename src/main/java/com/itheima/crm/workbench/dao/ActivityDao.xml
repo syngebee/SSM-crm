@@ -8,4 +8,66 @@
         INSERT INTO `tbl_activity`(id,owner,name,startDate,endDate,cost,description,createTime,createBy) VALUES(
         #{id},#{owner},#{name},#{startDate},#{endDate},#{cost},#{description},#{createTime},#{createBy})
     </insert>
+
+    <select id="getSum" resultType="int">
+        SELECT COUNT(*) FROM `tbl_activity` a
+        LEFT JOIN `tbl_user` u ON a.owner = u.id
+        <where>
+            <if test="name!=null and name != ''">
+                a.name like CONCAT('%',#{name},'%')
+            </if>
+
+            <if test="owner!=null and owner != ''">
+                AND owner like CONCAT('%',#{owner},'%')
+            </if>
+
+            <if test="startDate!=null and startDate != ''">
+                AND a.startDate &gt; #{startDate}
+            </if>
+
+            <if test="endDate!=null and endDate != ''">
+                AND a.endDate &lt; #{endDate}
+            </if>
+        </where>
+    </select>
+
+    <select id="pageList" resultType="com.itheima.crm.workbench.pojo.Activity">
+        SELECT a.`id`,u.name OWNER,a.`name`,a.`startDate`,a.`endDate`,u.name FROM `tbl_activity` a
+        LEFT JOIN `tbl_user` u ON a.owner = u.id
+        <where>
+            <if test="name!=null and name != ''">
+                a.name like CONCAT('%',#{name},'%')
+            </if>
+
+            <if test="owner!=null and owner != ''">
+                AND owner like CONCAT('%',#{owner},'%')
+            </if>
+
+            <if test="startDate!=null and startDate != ''">
+                AND a.startDate &gt; #{startDate}
+            </if>
+
+            <if test="endDate!=null and endDate != ''">
+                AND a.endDate &lt; #{endDate}
+            </if>
+        </where>
+
+        ORDER BY a.createTime DESC
+        limit #{skipCount},#{pageSize}
+    </select>
+
+    <select id="getCountByAids" resultType="int">
+        SELECT COUNT(*) FROM `tbl_activity` WHERE ID IN
+        <foreach collection="array" open="(" close=")" item="aid" separator=",">
+            #{aid}
+        </foreach>
+    </select>
+
+    <delete id="deleteByAids">
+        DELETE FROM `tbl_activity` WHERE ID IN
+        <foreach collection="array" open="(" close=")" item="aid" separator=",">
+            #{aid}
+        </foreach>
+    </delete>
+
 </mapper>

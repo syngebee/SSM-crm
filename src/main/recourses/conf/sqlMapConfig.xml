@@ -3,6 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
+
     <!--Mybatis全局设置-->
     <settings>
         <!--设置mybatis输出日志-->
@@ -16,6 +17,10 @@
     <!--别名位置-->
     <typeAliases>
     </typeAliases>
+
+    <plugins>
+        <plugin interceptor="com.github.pagehelper.PageInterceptor"/>
+    </plugins>
 
     <!--映射文件-->
     <mappers>

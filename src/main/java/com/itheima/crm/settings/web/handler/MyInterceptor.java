@@ -13,9 +13,8 @@ public class MyInterceptor implements HandlerInterceptor {
 //        System.out.println("拦截器执行,user值为: "+user);
 
         if (user==null){
-            System.out.println("return false 请求转发");
-//            return false;
             response.sendRedirect("/static/index.html");
+            return false;
         }
         return true;
     }
