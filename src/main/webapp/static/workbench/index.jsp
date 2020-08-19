@@ -31,7 +31,6 @@
                 $(this).children("a").css("color","white");
             });
 
-
             window.open("/static/workbench/main/index.html","workareaFrame");
 
         });

@@ -32,7 +32,7 @@
     </select>
 
     <select id="pageList" resultType="com.itheima.crm.workbench.pojo.Activity">
-        SELECT a.`id`,u.name OWNER,a.`name`,a.`startDate`,a.`endDate`,u.name FROM `tbl_activity` a
+        SELECT a.`id`,u.name OWNER,a.`name`,a.`startDate`,a.`endDate` FROM `tbl_activity` a
         LEFT JOIN `tbl_user` u ON a.owner = u.id
         <where>
             <if test="name!=null and name != ''">
@@ -70,4 +70,14 @@
         </foreach>
     </delete>
 
+    <select id="getActivityById" resultType="com.itheima.crm.workbench.pojo.Activity">
+        SELECT a.`id`,a.`owner`,a.`name`,a.`startDate`,a.`endDate`,a.`description`,a.`cost` FROM `tbl_activity` a
+        WHERE a.`id`=#{id}
+    </select>
+
+    <update id="updateActivity">
+        UPDATE `tbl_activity` SET `owner`=#{owner},`name`=#{name},`startDate`=#{startDate},
+        `endDate`=#{endDate},`cost`=#{cost},`description`=#{description},`editTime`=#{editTime},
+        `editBy`=#{editBy} WHERE `id`=#{id}
+    </update>
 </mapper>

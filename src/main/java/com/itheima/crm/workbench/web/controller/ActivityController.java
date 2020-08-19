@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/Activity")
@@ -31,12 +33,12 @@ public class ActivityController {
     @RequestMapping("/getUserList")
     @ResponseBody
     public List<User> getUserListActivity(){
-        return userService.getUsers();
+        return userService.getUserNames();
     }
 
     @RequestMapping("/save")
     @ResponseBody
-    public Boolean saveUser(Activity a, HttpServletRequest request){
+    public Boolean saveActivity(Activity a, HttpServletRequest request){
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
 
@@ -59,9 +61,28 @@ public class ActivityController {
 
     @RequestMapping("/delete")
     @ResponseBody
-    public Boolean pageList(String[]id){
+    public Boolean deleteActivity(String[]id){
         System.out.println(Arrays.toString(id));
-        Boolean flag = activityService.delete(id);
-        return flag;
+        return activityService.delete(id);
+    }
+
+    @RequestMapping("/getUserListAndActivity")
+    @ResponseBody
+    public Map<String,Object> getUserListAndActivity(String id){
+        System.out.println("进入处理");
+        Map<String, Object> result = new HashMap<>();
+        List<User> userList = userService.getUserNames();
+        result.put("userList",userList);
+        Activity a = activityService.getActivityById(id);
+        result.put("a",a);
+        return result;
+    }
+
+    @RequestMapping("/update")
+    @ResponseBody
+    public Boolean updateActivity(Activity a){
+        //修改时间
+        a.setEditTime(DateTimeUtil.getSysTime());
+        return activityService.updateActivity(a);
     }
 }

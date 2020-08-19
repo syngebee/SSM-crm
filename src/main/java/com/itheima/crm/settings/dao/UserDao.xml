@@ -11,4 +11,9 @@
         SELECT `id`,`loginAct`,`name`,`loginPwd`,`email`,`expireTime`,`lockState`,`deptno`,
         `allowIps`,`createTime`,`createBy`,`editTime`,`editBy` FROM tbl_user
     </select>
+
+    <select id="getUserNames" resultType="com.itheima.crm.settings.pojo.User">
+         SELECT `id`,`name`,`email`,`expireTime`,`lockState`,`deptno`,
+        `allowIps`,`createTime`,`createBy`,`editTime`,`editBy` FROM tbl_user
+    </select>
 </mapper>

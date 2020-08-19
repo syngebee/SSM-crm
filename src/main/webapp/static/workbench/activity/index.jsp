@@ -23,7 +23,7 @@ request.getServerPort()+request.getContextPath()+"/";
 <script type="text/javascript">
 
 	$(function(){
-	    //点击打开创建活动页面
+	    //点打开创建活动页面
 		$("#addBtn").click(function () {
 		    //添加时间控件
             $(".time").datetimepicker({
@@ -46,6 +46,7 @@ request.getServerPort()+request.getContextPath()+"/";
 						$("#create-owner").append("<option value='"+element.id+"'>"+element.name+"</option>");
                     });
 					let id = "${user.id}";
+					alert(id);
 					$("#create-owner").val(id);
                 },
 				error:function () {},
@@ -54,7 +55,7 @@ request.getServerPort()+request.getContextPath()+"/";
 			$("#createActivityModal").modal("show");
         });
 
-		//创建按钮
+		//创建窗口-保存按钮
 		$("#saveBtn").click(function () {
 			$.ajax({
 				url:"/Activity/save",
@@ -68,6 +69,7 @@ request.getServerPort()+request.getContextPath()+"/";
                     "description": $.trim($("#create-description").val())
 				},
 				//{"success":true/false}
+                dataType:"json",
 				success:function (data) {
 				    if (data){
                         let num = $("#rows_per_page_activityPage").val();
@@ -81,21 +83,104 @@ request.getServerPort()+request.getContextPath()+"/";
 				        alert("添加活动失败");
 					}
                 },
-				error:function () {},
-				dataType:"text"
+				error:function () {}
 			})
         });
 
-		//修改按钮
+		//打开修改活动页面
 		$("#editBtn").click(function () {
-			$("#editActivityModal").modal("show");
+		    var $xz = $("input[name=xz]:checked");
+		    if ($xz.length==0){
+		        alert("请选择要修改的数据");
+			} else if($xz.length>1){
+		        alert("只能选择一项进行修改");
+			} else{
+                //时间插件
+                $(".time").datetimepicker({
+                    minView: "month",
+                    language:  'zh-CN',
+                    format: 'yyyy-mm-dd',
+                    autoclose: true,
+                    todayBtn: true,
+                    pickerPosition: "bottom-left"
+                });
+		        //用户信息回调, 填充下拉框
+                let id = $xz.val();
+                //异步请求
+                $.ajax({
+                    url:"/Activity/getUserListAndActivity",
+                    type:"get",
+                    data:{
+                        "id":id
+					},
+                    //用户信息回调
+					//接收: 用户列表 和 单条用户信息 {"userList":[{用户1},{用户2},{用户3}],"a":{市场活动}}
+                    success:function (map) {
+                        let $edit = $("#edit-owner");
+                        $edit.empty();
+                        $.each(map.userList,function (index,element) {
+                            $edit.append("<option value='"+element.id+"'>"+element.name+"</option>")
+                        });
+
+                        //填充值,隐藏id 为更新按钮做铺垫
+						$("#edit-id").val(map.a.id);
+						$("#edit-name").val(map.a.name);
+                        $edit.val(map.a.owner);
+						$("#edit-startDate").val(map.a.startDate);
+						$("#edit-endDate").val(map.a.endDate);
+						$("#edit-cost").val(map.a.cost);
+						$("#edit-description").val(map.a.description);
+                    },
+                    error:function () {},
+                    dataType:"json"
+                });
+
+
+                $("#editActivityModal").modal("show");
+			}
+
+        });
+
+		//更新按钮
+		$("#updateBtn").click(function () {
+		    if(confirm("是否确认更新?")){
+                $.ajax({
+                    url:"/Activity/update",
+                    type:"post",
+                    data:{
+                        "id":$("#edit-id").val(),
+                        "owner": $.trim($("#edit-owner").val()),
+                        "name": $.trim($("#edit-name").val()),
+                        "startDate": $.trim($("#edit-startDate").val()),
+                        "endDate": $.trim($("#edit-endDate").val()),
+                        "cost": $.trim($("#edit-cost").val()),
+                        "description": $.trim($("#edit-description").val()),
+						"editBy":"${user.name}"
+                    },
+                    //{"success":true/false}
+                    dataType:"json",
+                    success:function (data) {
+                        if (data){
+                            let num = $("#rows_per_page_activityPage").val();
+                            pageList(1,num);
+                            //关闭模态窗口
+                            $("#editActivityModal").modal("hide")
+
+                        } else{
+                            alert("修改活动失败");
+                        }
+                    },
+                    error:function () {}
+                })
+			}
+
         });
 
 		//删除按钮
 		$("#deleteBtn").click(function () {
 			let deleteBoxes =$("input[name=xz]:checked");
 			if (deleteBoxes.length == 0) {
-			    alert("未选中任何数据");
+			    alert("请选中要删除的数据");
 			}else {
 				if(confirm("确定删除选中的数据吗?")){
                     let param = "";
@@ -122,6 +207,7 @@ request.getServerPort()+request.getContextPath()+"/";
                         error:function () {}
                     });
 				}
+				$("#editActivityModal").modal("hide")
 			}
 
         });
@@ -129,6 +215,7 @@ request.getServerPort()+request.getContextPath()+"/";
 		//页面加载完毕后 展现列表 pageList(pageNo,pageSize)
 		pageList(1,5);
 
+		//查询按钮
 		$("#searchBtn").click(function () {
             $("#hidden-name").val($.trim($("#search-name").val()));
             $("#hidden-owner").val($.trim($("#search-owner").val()));
@@ -138,10 +225,12 @@ request.getServerPort()+request.getContextPath()+"/";
             pageList(1,num);
         });
 
+		//全选按钮
 		$("#selectAll").click(function () {
 		    $('input[type=checkbox]').prop("checked",this.checked);
         });
 
+		//反向全选勾,子全选->全选按钮勾选, 子非全选->全选按钮消失
 		let xz = $("input[name=xz]");
 		$("#activityBody").on('click',xz,function () {
 			$("#selectAll").prop("checked",$("input[name=xz]").length==$("input[name=xz]:checked").length);
@@ -150,8 +239,7 @@ request.getServerPort()+request.getContextPath()+"/";
 
 	});
 
-	//删除后
-	//修改后
+	//查询分页功能
     function pageList(pageNo,pageSize){
         $("#selectAll").prop("checked",false);
         //查询前把隐藏域中的属性取出来,赋值给当前域
@@ -159,7 +247,6 @@ request.getServerPort()+request.getContextPath()+"/";
         $("#search-owner").val($.trim($("#hidden-owner").val()));
         $("#search-startDate").val($.trim($("#hidden-startDate").val()));
         $("#search-endDate").val($.trim($("#hidden-endDate").val()));
-
 		$.ajax({
 				   url:"/Activity/pageList",
 				   type:"post",
@@ -292,51 +379,51 @@ request.getServerPort()+request.getContextPath()+"/";
 				</div>
 				<div class="modal-body">
 				
-					<form class="form-horizontal" role="form" id="activityAddForm">
-					
+					<form class="form-horizontal" role="form" id="edit-form">
+						<input type="hidden" id="edit-id">
 						<div class="form-group">
-							<label for="edit-marketActivityOwner" class="col-sm-2 control-label">所有者<span style="font-size: 15px; color: red;">*</span></label>
+							<label for="edit-owner" class="col-sm-2 control-label">所有者<span style="font-size: 15px; color: red;">*</span></label>
 							<div class="col-sm-10" style="width: 300px;">
-								<select class="form-control" id="edit-marketActivityOwner">
+								<select class="form-control" id="edit-owner">
 								</select>
 							</div>
-                            <label for="edit-marketActivityName" class="col-sm-2 control-label">名称<span style="font-size: 15px; color: red;">*</span></label>
+                            <label for="edit-name" class="col-sm-2 control-label">名称<span style="font-size: 15px; color: red;">*</span></label>
                             <div class="col-sm-10" style="width: 300px;">
-                                <input type="text" class="form-control" id="edit-marketActivityName" value="发传单">
+                                <input type="text" class="form-control" id="edit-name">
                             </div>
 						</div>
 
 						<div class="form-group">
-							<label for="edit-startTime" class="col-sm-2 control-label">开始日期</label>
+							<label for="edit-startDate" class="col-sm-2 control-label time">开始日期</label>
 							<div class="col-sm-10" style="width: 300px;">
-								<input type="text" class="form-control time" id="edit-startTime" value="2020-10-10">
+								<input type="text" class="form-control time" id="edit-startDate">
 							</div>
-							<label for="edit-endTime" class="col-sm-2 control-label">结束日期</label>
+							<label for="edit-endDate" class="col-sm-2 control-label time">结束日期</label>
 							<div class="col-sm-10" style="width: 300px;">
-								<input type="text" class="form-control time" id="edit-endTime" value="2020-10-20">
+								<input type="text" class="form-control time" id="edit-endDate">
 							</div>
 						</div>
 						
 						<div class="form-group">
 							<label for="edit-cost" class="col-sm-2 control-label">成本</label>
 							<div class="col-sm-10" style="width: 300px;">
-								<input type="text" class="form-control" id="edit-cost" value="5,000">
+								<input type="text" class="form-control" id="edit-cost">
 							</div>
 						</div>
 						
 						<div class="form-group">
-							<label for="edit-describe" class="col-sm-2 control-label">描述</label>
+							<label for="edit-description" class="col-sm-2 control-label">描述</label>
 							<div class="col-sm-10" style="width: 81%;">
-								<textarea class="form-control" rows="3" id="edit-describe">市场活动Marketing，是指品牌主办或参与的展览会议与公关市场活动，包括自行主办的各类研讨会、客户交流会、演示会、新产品发布会、体验会、答谢会、年会和出席参加并布展或演讲的展览会、研讨会、行业交流会、颁奖典礼等</textarea>
+								<textarea class="form-control" rows="3" id="edit-description"></textarea>
 							</div>
 						</div>
 						
 					</form>
-					
+
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-					<button type="button" class="btn btn-primary" data-dismiss="modal">更新</button>
+					<button type="button" class="btn btn-primary" id="updateBtn">更新</button>
 				</div>
 			</div>
 		</div>

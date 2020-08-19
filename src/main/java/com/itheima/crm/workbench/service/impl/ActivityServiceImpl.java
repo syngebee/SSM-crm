@@ -1,5 +1,6 @@
 package com.itheima.crm.workbench.service.impl;
 
+import com.itheima.crm.settings.dao.UserDao;
 import com.itheima.crm.workbench.dao.ActivityDao;
 import com.itheima.crm.workbench.dao.ActivityRemarkDao;
 import com.itheima.crm.workbench.dto.ActivityRequestDTO;
@@ -13,6 +14,9 @@ import java.util.List;
 
 @Service
 public class ActivityServiceImpl implements ActivityService {
+
+    @Autowired
+    private UserDao userDao;
     @Autowired
     private ActivityDao activityDao;
     @Autowired
@@ -72,4 +76,21 @@ public class ActivityServiceImpl implements ActivityService {
         }
         return flag;
     }
+
+    @Override
+    public Activity getActivityById(String id) {
+        Activity act = activityDao.getActivityById(id);
+        if (act==null) System.out.println("修改查找活动没找到,id:"+id);
+        return act;
+    }
+
+    @Override
+    public Boolean updateActivity(Activity a) {
+        Boolean flag = true;
+        int count =activityDao.updateActivity(a);
+        if (count!=1) flag=false;
+        return flag;
+    }
+
+
 }
