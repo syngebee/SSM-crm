@@ -72,8 +72,7 @@ request.getServerPort()+request.getContextPath()+"/";
                 dataType:"json",
 				success:function (data) {
 				    if (data){
-                        let num = $("#rows_per_page_activityPage").val();
-                        pageList(1,num);
+                        pageList(1,$("#activityPage").bs_pagination('getOption', 'rowsPerPage'));
                         //添加成功后，刷新活动列表（ajax局部刷新）
                         $("#create-form")[0].reset();
                         //关闭模态窗口
@@ -161,8 +160,8 @@ request.getServerPort()+request.getContextPath()+"/";
                     dataType:"json",
                     success:function (data) {
                         if (data){
-                            let num = $("#rows_per_page_activityPage").val();
-                            pageList(1,num);
+                            pageList($("#activityPage").bs_pagination('getOption', 'currentPage')
+                                ,$("#activityPage").bs_pagination('getOption', 'rowsPerPage'));
                             //关闭模态窗口
                             $("#editActivityModal").modal("hide")
 
@@ -198,8 +197,7 @@ request.getServerPort()+request.getContextPath()+"/";
                         success:function (data) {
                             //{"success":true/false}
                             if (data){
-                                let num = $("#rows_per_page_activityPage").val();
-                                pageList(1,num);
+                                pageList(1,$("#activityPage").bs_pagination('getOption', 'rowsPerPage'));
                             }else{
                                 alert("删除市场活动失败")
                             }
@@ -221,8 +219,7 @@ request.getServerPort()+request.getContextPath()+"/";
             $("#hidden-owner").val($.trim($("#search-owner").val()));
             $("#hidden-startDate").val($.trim($("#search-startDate").val()));
             $("#hidden-endDate").val($.trim($("#search-endDate").val()));
-            let num = $("#rows_per_page_activityPage").val();
-            pageList(1,num);
+            pageList(1,$("#activityPage").bs_pagination('getOption', 'rowsPerPage'));
         });
 
 		//全选按钮
@@ -266,7 +263,7 @@ request.getServerPort()+request.getContextPath()+"/";
 				       $.each(dataList,function (index, element) {
 						   html+='<tr class="active">';
                            html+='<td><input type="checkbox" value="'+element.id+'" name="xz"/></td>';
-                           html+='<td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href=\'static/workbench/activity/detail.jsp\';">'+element.name+'</a></td>';
+                           html+='<td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href=\'/Activity/detail?id='+element.id+'\';">'+element.name+'</a></td>';
                            html+='<td>'+element.owner+'</td>';
                            html+='<td>'+element.startDate+'</td>';
                            html+='<td>'+element.endDate+'</td>'

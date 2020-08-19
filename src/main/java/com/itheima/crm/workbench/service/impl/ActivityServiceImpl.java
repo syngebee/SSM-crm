@@ -1,6 +1,5 @@
 package com.itheima.crm.workbench.service.impl;
 
-import com.itheima.crm.settings.dao.UserDao;
 import com.itheima.crm.workbench.dao.ActivityDao;
 import com.itheima.crm.workbench.dao.ActivityRemarkDao;
 import com.itheima.crm.workbench.dto.ActivityRequestDTO;
@@ -15,8 +14,6 @@ import java.util.List;
 @Service
 public class ActivityServiceImpl implements ActivityService {
 
-    @Autowired
-    private UserDao userDao;
     @Autowired
     private ActivityDao activityDao;
     @Autowired
@@ -55,7 +52,6 @@ public class ActivityServiceImpl implements ActivityService {
     public Boolean delete(String[] ids) {
         //选择删除了一项/多项
         //有remark/没remark
-
         Boolean flag=true;
 
         int count1 = activityRemarkDao.getCountByAids(ids);
@@ -90,6 +86,11 @@ public class ActivityServiceImpl implements ActivityService {
         int count =activityDao.updateActivity(a);
         if (count!=1) flag=false;
         return flag;
+    }
+
+    @Override
+    public Activity getDetail(String id) {
+        return activityDao.getDetail(id);
     }
 
 

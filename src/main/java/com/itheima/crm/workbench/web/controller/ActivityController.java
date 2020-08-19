@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -30,10 +31,11 @@ public class ActivityController {
     @Autowired
     private ActivityService activityService;
 
+
     @RequestMapping("/getUserList")
     @ResponseBody
     public List<User> getUserListActivity(){
-        return userService.getUserNames();
+        return userService.getUsers();
     }
 
     @RequestMapping("/save")
@@ -71,7 +73,7 @@ public class ActivityController {
     public Map<String,Object> getUserListAndActivity(String id){
         System.out.println("进入处理");
         Map<String, Object> result = new HashMap<>();
-        List<User> userList = userService.getUserNames();
+        List<User> userList = userService.getUsers();
         result.put("userList",userList);
         Activity a = activityService.getActivityById(id);
         result.put("a",a);
@@ -84,5 +86,15 @@ public class ActivityController {
         //修改时间
         a.setEditTime(DateTimeUtil.getSysTime());
         return activityService.updateActivity(a);
+    }
+
+    @RequestMapping("/detail")
+    public ModelAndView toDetail(String id){
+        ModelAndView mv = new ModelAndView();
+        Activity a =activityService.getDetail(id);
+        System.out.println(a);
+        mv.addObject("a",a);
+        mv.setViewName("forward:/static/workbench/activity/detail.jsp");
+        return mv;
     }
 }
