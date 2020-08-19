@@ -2,7 +2,7 @@ package com.itheima.crm.workbench.pojo;
 
 public class ActivityRemark {
     private String id;              //主键编号
-    private String noteConten;      //备注信息
+    private String noteContent;      //备注信息
     private String createTime;      //创建时间
     private String createBy;        //创建人
     private String editTime;        //修改时间
@@ -14,7 +14,7 @@ public class ActivityRemark {
     public String toString() {
         return "ActivityRemark{" +
                 "id='" + id + '\'' +
-                ", noteConten='" + noteConten + '\'' +
+                ", noteContent='" + noteContent + '\'' +
                 ", createTime='" + createTime + '\'' +
                 ", createBy='" + createBy + '\'' +
                 ", editTime='" + editTime + '\'' +
@@ -32,12 +32,12 @@ public class ActivityRemark {
         this.id = id;
     }
 
-    public String getNoteConten() {
-        return noteConten;
+    public String getNoteContent() {
+        return noteContent;
     }
 
-    public void setNoteConten(String noteConten) {
-        this.noteConten = noteConten;
+    public void setNoteContent(String noteConten) {
+        this.noteContent = noteConten;
     }
 
     public String getCreateTime() {

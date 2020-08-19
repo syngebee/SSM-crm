@@ -17,4 +17,48 @@
             #{aid}
         </foreach>
     </delete>
+
+    <select id="getRemarkByAid" resultType="com.itheima.crm.workbench.pojo.ActivityRemark">
+        SELECT id,noteContent,createTime,createBy,editTime,editBy,editFlag,
+        (CASE editFlag
+		    WHEN 1 THEN
+		        editTime
+		    WHEN 0 THEN
+		        createTime
+	    END) `time` ,
+	    (CASE editFlag
+		    WHEN 1 THEN
+		        editBy
+		    WHEN 0 THEN
+		        createBy
+        END) `By`
+        FROM
+          `tbl_activity_remark`
+        WHERE activityId=#{id}
+        ORDER BY
+	        ISNULL(`time`),`time`='',`time`
+    </select>
+
+    <delete id="deleteRemarkByArid">
+        DELETE FROM `tbl_activity_remark` WHERE id=#{id}
+    </delete>
+
+    <insert id="addActivityRemark">
+        INSERT INTO
+        `tbl_activity_remark`(id,noteContent,createTime,createBy,editFlag,activityId)
+        VALUES
+        (#{id},#{noteContent},#{createTime},#{createBy},#{editFlag},#{activityId})
+    </insert>
+
+    <update id="updateRemark">
+        UPDATE
+            `tbl_activity_remark`
+        SET
+            `noteContent`=#{noteContent},
+            `editBy`=#{editBy},
+            `editTime`=#{editTime},
+            `editFlag`=#{editFlag}
+        WHERE
+            `id`=#{id}
+    </update>
 </mapper>

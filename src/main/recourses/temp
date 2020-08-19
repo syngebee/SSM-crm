@@ -1,9 +1,9 @@
 $.ajax({
-        url:"/",
-        type:"",
-        data:"",
-        success:function () {
-        },
-        error:function () {},
-        dataType:""
-});
+           url:"/",
+           type:"",
+           data:"",
+           dataType:"",
+           success:function () {
+           },
+           error:function () {}
+   });

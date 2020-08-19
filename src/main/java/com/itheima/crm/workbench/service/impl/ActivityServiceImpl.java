@@ -4,6 +4,7 @@ import com.itheima.crm.workbench.dao.ActivityDao;
 import com.itheima.crm.workbench.dao.ActivityRemarkDao;
 import com.itheima.crm.workbench.dto.ActivityRequestDTO;
 import com.itheima.crm.workbench.pojo.Activity;
+import com.itheima.crm.workbench.pojo.ActivityRemark;
 import com.itheima.crm.workbench.service.ActivityService;
 import com.itheima.crm.workbench.vo.PaginationVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -91,6 +92,37 @@ public class ActivityServiceImpl implements ActivityService {
     @Override
     public Activity getDetail(String id) {
         return activityDao.getDetail(id);
+    }
+
+    @Override
+    public List<ActivityRemark> getRemarkByAid(String activityId) {
+        return activityRemarkDao.getRemarkByAid(activityId);
+    }
+
+    @Override
+    public Boolean deleteRemarkByArid(String activityRemarkId) {
+        Boolean flag = true;
+        int count =activityRemarkDao.deleteRemarkByArid(activityRemarkId);
+        if (count!=1) flag =false;
+        return flag;
+    }
+
+    @Override
+    public Boolean addActivityRemark(ActivityRemark ar) {
+        Boolean flag=true;
+        int count =activityRemarkDao.addActivityRemark(ar);
+        if (count!=1) flag=false;
+        return flag;
+    }
+
+    @Override
+    public Boolean updateRemark(ActivityRemark ar) {
+        Boolean flag=true;
+        int count= activityRemarkDao.updateRemark(ar);
+        if (count != 1){
+            flag =false;
+        }
+        return flag;
     }
 
 

@@ -5,6 +5,7 @@ import com.itheima.crm.settings.service.UserService;
 import com.itheima.crm.utils.DateTimeUtil;
 import com.itheima.crm.utils.UUIDUtil;
 import com.itheima.crm.workbench.pojo.Activity;
+import com.itheima.crm.workbench.pojo.ActivityRemark;
 import com.itheima.crm.workbench.service.ActivityService;
 import com.itheima.crm.workbench.dto.ActivityRequestDTO;
 import com.itheima.crm.workbench.vo.PaginationVO;
@@ -96,5 +97,34 @@ public class ActivityController {
         mv.addObject("a",a);
         mv.setViewName("forward:/static/workbench/activity/detail.jsp");
         return mv;
+    }
+
+    @RequestMapping("/activityRemark")
+    @ResponseBody
+    public List<ActivityRemark> getRemarkByAid(String activityId){
+        List<ActivityRemark> remarkByAid = activityService.getRemarkByAid(activityId);
+        System.out.println(remarkByAid);
+        return remarkByAid;
+    }
+
+    @RequestMapping("/removeRemark")
+    @ResponseBody
+    public Boolean deleteRemarkByArid(String activityRemarkId){
+        return activityService.deleteRemarkByArid(activityRemarkId);
+    }
+
+    @RequestMapping("/addRemark")
+    @ResponseBody
+    public Boolean addRemark(ActivityRemark ar){
+        ar.setId(UUIDUtil.getUUID());
+        ar.setCreateTime(DateTimeUtil.getSysTime());
+        return activityService.addActivityRemark(ar);
+    }
+
+    @RequestMapping("/updateRemark")
+    @ResponseBody
+    public Boolean updateRemark(ActivityRemark ar){
+        ar.setEditTime(DateTimeUtil.getSysTime());
+        return activityService.updateRemark(ar);
     }
 }
