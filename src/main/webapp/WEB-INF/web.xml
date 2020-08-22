@@ -27,6 +27,11 @@
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
 
+    <!--监听上下文，因为要从Spring中创建所以写在Spring下面-->
+    <listener>
+        <listener-class>com.itheima.crm.web.listener.SysInitListener</listener-class>
+    </listener>
+
     <!--字符集过滤器-->
     <filter>
         <filter-name>characterEncodingFilter</filter-name>
@@ -50,6 +55,7 @@
         <filter-name>characterEncodingFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
+
 
     <!--欢迎页-->
     <welcome-file-list>

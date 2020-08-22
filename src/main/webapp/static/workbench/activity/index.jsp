@@ -233,6 +233,14 @@ request.getServerPort()+request.getContextPath()+"/";
 			$("#selectAll").prop("checked",$("input[name=xz]").length==$("input[name=xz]:checked").length);
         });
 
+        $(".time").datetimepicker({
+            minView: "month",
+            language:  'zh-CN',
+            format: 'yyyy-mm-dd',
+            autoclose: true,
+            todayBtn: true,
+            pickerPosition: "bottom-left"
+        });
 
 	});
 
@@ -460,13 +468,13 @@ request.getServerPort()+request.getContextPath()+"/";
 				  <div class="form-group">
 				    <div class="input-group">
 				      <div class="input-group-addon">开始日期</div>
-					  <input class="form-control" type="text" id="search-startTime" />
+					  <input class="form-control time" type="text" id="search-startTime" />
 				    </div>
 				  </div>
 				  <div class="form-group">
 				    <div class="input-group">
 				      <div class="input-group-addon">结束日期</div>
-					  <input class="form-control" type="text" id="search-endTime">
+					  <input class="form-control time" type="text" id="search-endTime">
 				    </div>
 				  </div>
 				  

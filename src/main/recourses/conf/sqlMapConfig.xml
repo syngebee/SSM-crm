@@ -24,6 +24,6 @@
 
     <!--映射文件-->
     <mappers>
-        <package name="com.itheima.crm"/>
+        <package name="com.itheima.crm.settings.dao,com.itheima.crm.workbench.dao"/>
     </mappers>
 </configuration>

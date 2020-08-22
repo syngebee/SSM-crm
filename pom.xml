@@ -7,7 +7,10 @@
   <groupId>itheima</groupId>
   <artifactId>crm01</artifactId>
   <version>1.0</version>
-  <packaging>war</packaging>
+    <modules>
+        <module>../myTest</module>
+    </modules>
+    <packaging>pom</packaging>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

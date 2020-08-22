@@ -18,7 +18,7 @@
             </if>
 
             <if test="owner!=null and owner != ''">
-                AND owner like CONCAT('%',#{owner},'%')
+                AND u.name like CONCAT('%',#{owner},'%')
             </if>
 
             <if test="startDate!=null and startDate != ''">
@@ -40,7 +40,7 @@
             </if>
 
             <if test="owner!=null and owner != ''">
-                AND owner like CONCAT('%',#{owner},'%')
+                AND u.name like CONCAT('%',#{owner},'%')
             </if>
 
             <if test="startDate!=null and startDate != ''">

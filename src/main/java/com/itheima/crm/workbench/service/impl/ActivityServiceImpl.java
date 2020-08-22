@@ -37,6 +37,7 @@ public class ActivityServiceImpl implements ActivityService {
         //目标:   int total;
         //        List<T> dataList;
 
+        System.out.println(aDto);
         //初始化返回值
         PaginationVO<Activity> pv = new PaginationVO<>();
         //赋值1

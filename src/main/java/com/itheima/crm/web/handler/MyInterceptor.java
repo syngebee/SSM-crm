@@ -1,4 +1,4 @@
-package com.itheima.crm.settings.web.handler;
+package com.itheima.crm.web.handler;
 
 import org.springframework.web.servlet.HandlerInterceptor;
 
@@ -13,7 +13,7 @@ public class MyInterceptor implements HandlerInterceptor {
 //        System.out.println("拦截器执行,user值为: "+user);
 
         if (user==null){
-            response.sendRedirect("/static/index.html");
+            response.sendRedirect("/static/index.jsp");
             return false;
         }
         return true;
