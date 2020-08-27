@@ -5,6 +5,6 @@
 <mapper namespace="com.itheima.crm.settings.dao.DicValueDao">
 
     <select id="getValuesByType" resultType="com.itheima.crm.settings.pojo.DicValue">
-        SELECT * FROM `tbl_dic_value` WHERE typeCode=#{code}
+        SELECT * FROM `tbl_dic_value` WHERE typeCode=#{code} ORDER BY orderNo+0
     </select>
 </mapper>

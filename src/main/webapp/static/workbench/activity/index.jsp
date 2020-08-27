@@ -46,7 +46,7 @@ request.getServerPort()+request.getContextPath()+"/";
 						$("#create-owner").append("<option value='"+element.id+"'>"+element.name+"</option>");
                     });
 					let id = "${user.id}";
-					alert(id);
+					// alert(id);
 					$("#create-owner").val(id);
                 },
 				error:function () {},

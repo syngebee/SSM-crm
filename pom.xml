@@ -7,10 +7,8 @@
   <groupId>itheima</groupId>
   <artifactId>crm01</artifactId>
   <version>1.0</version>
-    <modules>
-        <module>../myTest</module>
-    </modules>
-    <packaging>pom</packaging>
+  <packaging>war</packaging>
+
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -138,6 +136,26 @@
       <groupId>com.github.pagehelper</groupId>
       <artifactId>pagehelper</artifactId>
       <version>5.1.10</version>
+    </dependency>
+
+    <!--jstl-->
+    <dependency>
+      <groupId>jstl</groupId>
+      <artifactId>jstl</artifactId>
+      <version>1.2</version>
+    </dependency>
+
+    <dependency>
+      <groupId>taglibs</groupId>
+      <artifactId>standard</artifactId>
+      <version>1.1.2</version>
+    </dependency>
+
+    <!--jedis-->
+    <dependency>
+      <groupId>redis.clients</groupId>
+      <artifactId>jedis</artifactId>
+      <version>2.7.0</version>
     </dependency>
 
   </dependencies>

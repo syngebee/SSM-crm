@@ -2,6 +2,7 @@ package com.itheima.crm.workbench.dao;
 
 import com.itheima.crm.workbench.dto.ActivityRequestDTO;
 import com.itheima.crm.workbench.pojo.Activity;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -22,4 +23,10 @@ public interface ActivityDao {
     int updateActivity(Activity a);
 
     Activity getDetail(String id);
+
+    List<Activity> showActivityListByCid(String clueId);
+
+    List<Activity> getActivityListByNameAndNotByClueId(@Param("name") String name, @Param("clueId") String clueId);
+
+    List<Activity> getActivityListByName(String name);
 }

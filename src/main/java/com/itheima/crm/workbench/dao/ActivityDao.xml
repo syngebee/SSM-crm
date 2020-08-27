@@ -88,4 +88,66 @@
         WHERE a.id=#{id};
     </select>
 
+    <select id="showActivityListByCid" resultType="com.itheima.crm.workbench.pojo.Activity">
+        SELECT
+            car.`id`,u.name `owner`,a.`name`,a.`startDate`,a.`endDate`
+        FROM
+            `tbl_clue` c
+            INNER JOIN
+            `tbl_clue_activity_relation` car
+            ON
+            c.id=#{cid} AND
+            c.id=car.clueId
+            LEFT JOIN
+            `tbl_activity` a
+            ON
+            a.id=car.activityId
+            LEFT JOIN
+            `tbl_user` u
+            ON
+            a.owner=u.id
+    </select>
+
+    <select id="getActivityListByNameAndNotByClueId" resultType="com.itheima.crm.workbench.pojo.Activity">
+        SELECT
+            a.id,u.name `owner`,a.`name`,a.`startDate`,a.`endDate`
+        FROM
+            `tbl_activity` a
+        LEFT JOIN
+            `tbl_user` u
+        ON
+            a.owner=u.id
+        WHERE
+            a.name LIKE CONCAT('%',#{name},'%') AND
+            a.id NOT IN(
+                SELECT
+                t.activityId
+                FROM
+                `tbl_activity` a
+                INNER JOIN
+                `tbl_clue_activity_relation` t
+                ON
+                a.id=t.activityId
+                INNER JOIN
+                `tbl_clue` c
+                ON
+                c.id=t.clueId
+                WHERE
+                t.clueId=#{clueId}
+	        )
+    </select>
+
+    <select id="getActivityListByName" resultType="com.itheima.crm.workbench.pojo.Activity">
+        SELECT
+            a.id,u.name `owner`,a.`name`,a.`startDate`,a.`endDate`
+        FROM
+            `tbl_activity` a
+         LEFT JOIN
+            `tbl_user` u
+        ON
+             a.owner=u.id
+        WHERE
+             a.name LIKE CONCAT('%',#{name},'%')
+    </select>
+
 </mapper>

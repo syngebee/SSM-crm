@@ -11,15 +11,4 @@
     <mvc:annotation-driven/>
     <mvc:resources mapping="/static/**" location="/static/"/>
 
-    <mvc:interceptors>
-        <mvc:interceptor>
-            <mvc:mapping path="/**"/>
-            <mvc:exclude-mapping path="/static/*.html"/>
-            <mvc:exclude-mapping path="/static/jquery/**"/>
-            <mvc:exclude-mapping path="/static/image/**"/>
-            <mvc:exclude-mapping path="/loginController"/>
-            <bean class="com.itheima.crm.web.handler.MyInterceptor"/>
-        </mvc:interceptor>
-    </mvc:interceptors>
-
 </beans>

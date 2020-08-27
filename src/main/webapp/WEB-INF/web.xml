@@ -32,6 +32,21 @@
         <listener-class>com.itheima.crm.web.listener.SysInitListener</listener-class>
     </listener>
 
+    <!--拦截器-->
+    <filter>
+        <filter-name>myFilter</filter-name>
+        <filter-class>com.itheima.crm.web.handler.MyFilter</filter-class>
+        <init-param>
+            <param-name>ignore</param-name>
+            <param-value>
+                /image/,/jquery/,/static/index.html,/static/login.html,/loginController
+            </param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>myFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
     <!--字符集过滤器-->
     <filter>
         <filter-name>characterEncodingFilter</filter-name>

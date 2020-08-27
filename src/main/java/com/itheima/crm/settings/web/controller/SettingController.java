@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import redis.clients.jedis.ShardedJedisPool;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -18,6 +19,9 @@ public class SettingController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private ShardedJedisPool shardedJedisPool;
 
 //    @RequestMapping(value="/loginController",produces="text/plain;charset=utf-8")
     @ResponseBody
@@ -54,4 +58,5 @@ public class SettingController {
         map.put("success",flag);
         return map;
     }
+
 }

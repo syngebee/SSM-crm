@@ -2,7 +2,7 @@ package com.itheima.crm.workbench.pojo;
 
 public class CustomerRemark {
     private String id;
-    private String noteConten;
+    private String noteContent;
     private String createBy;
     private String createTime;
     private String editBy;
@@ -18,12 +18,12 @@ public class CustomerRemark {
         this.id = id;
     }
 
-    public String getNoteConten() {
-        return noteConten;
+    public String getNoteContent() {
+        return noteContent;
     }
 
-    public void setNoteConten(String noteConten) {
-        this.noteConten = noteConten;
+    public void setNoteContent(String noteContent) {
+        this.noteContent = noteContent;
     }
 
     public String getCreateBy() {

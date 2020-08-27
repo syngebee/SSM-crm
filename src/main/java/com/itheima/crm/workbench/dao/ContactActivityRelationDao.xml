@@ -3,5 +3,17 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.itheima.crm.workbench.dao.ContactActivityRelationDao">
+    <insert id="save">
+        INSERT INTO `tbl_contacts_activity_relation`(
+            id,
+            contactsId,
+            activityId
+        ) VALUES(
+            #{id},
+            #{contactsId},
+            #{activityId}
+        )
+    </insert>
+
 
 </mapper>

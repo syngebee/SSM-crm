@@ -3,7 +3,6 @@ package com.itheima.crm.web.listener;
 
 import com.itheima.crm.settings.pojo.DicValue;
 import com.itheima.crm.settings.service.DicService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import javax.servlet.ServletContext;
@@ -21,6 +20,7 @@ public class SysInitListener implements ServletContextListener {
     @Override
     //监听到上下文对象创建时执行
     public void contextInitialized(ServletContextEvent event) {
+        System.out.println("服务器开始处理数据字典");
         DicService dicService = WebApplicationContextUtils.getWebApplicationContext(event.getServletContext()).getBean(DicService.class);
         //event这个对象可以获取到监听的对象
         ServletContext application = event.getServletContext();
@@ -29,10 +29,11 @@ public class SysInitListener implements ServletContextListener {
         Map<String,List<DicValue>> map =dicService.getAll();
         //存入ApplicationContext域中
         map.forEach(application::setAttribute);
+        System.out.println("服务器处理数据字典结束");
     }
 
     @Override
     public void contextDestroyed(ServletContextEvent sce) {
-        System.out.println("上下文对象销毁前");
+        System.out.println("上下文对象销毁");
     }
 }
