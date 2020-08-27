@@ -85,4 +85,86 @@
     <delete id="delete">
         DELETE FROM `tbl_clue` WHERE `id`=#{id}
     </delete>
+
+    <select id="pageList" resultType="com.itheima.crm.workbench.pojo.Clue">
+        SELECT
+        c.id,c.fullname,c.appellation,c.company,c.phone,c.mphone,c.source,u.name,c.mphone `owner`,c.state
+        FROM
+        `tbl_clue` c
+        LEFT JOIN
+        `tbl_user` u
+        ON c.owner = u.id
+        <where>
+            <if test="name!=null and name != ''">
+                c.fullname like CONCAT('%',#{name},'%')
+            </if>
+
+            <if test="company!=null and company != ''">
+                AND c.company like CONCAT('%',#{company},'%')
+            </if>
+
+            <if test="phone!=null and phone != ''">
+                AND c.phone like CONCAT('%',#{phone},'%')
+            </if>
+
+            <if test="source!=null and source != ''">
+                AND c.source = #{source}
+            </if>
+
+            <if test="owner!=null and owner != ''">
+                AND u.name like CONCAT('%',#{owner},'%')
+            </if>
+
+            <if test="mPhone!=null and owner != ''">
+                AND c.mPhone like CONCAT('%',#{mPhone},'%')
+            </if>
+
+            <if test="clueState!=null and owner != ''">
+                AND c.clueState = #{clueState}
+            </if>
+
+        </where>
+
+        ORDER BY c.createTime DESC
+        limit #{skipCount},#{pageSize}
+    </select>
+
+    <select id="getSum" resultType="int">
+        SELECT
+        COUNT(*)
+        FROM
+        `tbl_clue` c
+        LEFT JOIN
+        `tbl_user` u
+        ON c.owner = u.id
+        <where>
+            <if test="name!=null and name != ''">
+                c.fullname like CONCAT('%',#{name},'%')
+            </if>
+
+            <if test="company!=null and company != ''">
+                AND c.company like CONCAT('%',#{company},'%')
+            </if>
+
+            <if test="phone!=null and phone != ''">
+                AND c.phone like CONCAT('%',#{phone},'%')
+            </if>
+
+            <if test="source!=null and source != ''">
+                AND c.source = #{source}
+            </if>
+
+            <if test="owner!=null and owner != ''">
+                AND u.name like CONCAT('%',#{owner},'%')
+            </if>
+
+            <if test="mPhone!=null and owner != ''">
+                AND c.mPhone like CONCAT('%',#{mPhone},'%')
+            </if>
+
+            <if test="clueState!=null and owner != ''">
+                AND c.clueState = #{clueState}
+            </if>
+        </where>
+    </select>
 </mapper>

@@ -3,8 +3,10 @@ package com.itheima.crm.workbench.service.impl;
 import com.itheima.crm.utils.DateTimeUtil;
 import com.itheima.crm.utils.UUIDUtil;
 import com.itheima.crm.workbench.dao.*;
+import com.itheima.crm.workbench.dto.ClueRequestDTO;
 import com.itheima.crm.workbench.pojo.*;
 import com.itheima.crm.workbench.service.ClueService;
+import com.itheima.crm.workbench.vo.PaginationVO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -269,6 +271,21 @@ public class ClueServiceImpl implements ClueService {
         }
 
         return flag;
+    }
+
+    @Override
+    public PaginationVO pageList(ClueRequestDTO cDto) {
+        //初始化返回值
+        PaginationVO<Clue> pv = new PaginationVO<>();
+        //赋值1
+        List<Clue> clues = clueDao.pageList(cDto);
+        pv.setDataList(clues);
+        //赋值2
+        int sum = clueDao.getSum(cDto);
+        pv.setTotal(sum);
+
+        return pv;
+
     }
 
 

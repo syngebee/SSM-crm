@@ -4,11 +4,13 @@ import com.itheima.crm.settings.pojo.User;
 import com.itheima.crm.settings.service.UserService;
 import com.itheima.crm.utils.DateTimeUtil;
 import com.itheima.crm.utils.UUIDUtil;
+import com.itheima.crm.workbench.dto.ClueRequestDTO;
 import com.itheima.crm.workbench.pojo.Activity;
 import com.itheima.crm.workbench.pojo.Clue;
 import com.itheima.crm.workbench.pojo.Tran;
 import com.itheima.crm.workbench.service.ActivityService;
 import com.itheima.crm.workbench.service.ClueService;
+import com.itheima.crm.workbench.vo.PaginationVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -108,8 +110,6 @@ public class ClueController {
             //查看
             System.out.println(tran);
         }
-
-
             //传参 cluId 必须传
             //tran也得传,因为tran已经被SpringMVC创建
             //无法通过tran是否为null判断是否需要创建交易,所以再传递一个flag
@@ -120,6 +120,15 @@ public class ClueController {
             return "redirect:/static/workbench/clue/index.jsp";
         }
         return null;
-
     }
+
+    @RequestMapping("/pageList")
+    @ResponseBody
+    public PaginationVO pageList(ClueRequestDTO cDto){
+        int skipCount = (cDto.getPageNo() - 1) * cDto.getPageSize();
+        cDto.setSkipCount(skipCount);
+        System.out.println(cDto);
+        return clueService.pageList(cDto);
+    }
+
 }

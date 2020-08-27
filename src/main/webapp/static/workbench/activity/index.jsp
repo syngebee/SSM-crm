@@ -23,6 +23,7 @@ request.getServerPort()+request.getContextPath()+"/";
 <script type="text/javascript">
 
 	$(function(){
+	    // pageList(1,5);
 	    //点打开创建活动页面
 		$("#addBtn").click(function () {
 		    //添加时间控件
@@ -464,13 +465,13 @@ request.getServerPort()+request.getContextPath()+"/";
 				    </div>
 				  </div>
 
-
 				  <div class="form-group">
 				    <div class="input-group">
 				      <div class="input-group-addon">开始日期</div>
 					  <input class="form-control time" type="text" id="search-startTime" />
 				    </div>
 				  </div>
+
 				  <div class="form-group">
 				    <div class="input-group">
 				      <div class="input-group-addon">结束日期</div>
@@ -511,7 +512,6 @@ request.getServerPort()+request.getContextPath()+"/";
 			</div>
 			
 		</div>
-		
 	</div>
 </body>
 </html>
