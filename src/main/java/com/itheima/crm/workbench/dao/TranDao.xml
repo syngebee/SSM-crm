@@ -40,4 +40,50 @@
         #{nextContactTime}
         )
     </insert>
+
+    <select id="getTranById" resultType="com.itheima.crm.workbench.pojo.Tran">
+        SELECT
+            t.id,
+            u.name `owner`,
+            t.money,
+            t.name,
+            t.expectedDate,
+            cus.name customerId,
+            t.stage,
+            t.type,
+            t.source,
+            a.name activityId,
+            con.fullname contactsId,
+            t.createBy,
+            t.createTime,
+            t.editBy,
+            t.editTime,
+            t.description,
+            t.contactSummary,
+            t.nextContactTime
+        FROM
+            `tbl_tran` t
+            LEFT JOIN
+            `tbl_user` u
+            ON
+            t.owner = u.id
+            LEFT JOIN
+            `tbl_contacts` con
+            ON
+            con.id=t.contactsId
+            LEFT JOIN
+            `tbl_customer` cus
+            ON
+            cus.id=t.customerId
+            LEFT JOIN
+            `tbl_activity` a
+            ON
+            a.id=t.activityId
+        WHERE
+            t.id=#{id}
+    </select>
+
+    <update id="changeStage">
+        UPDATE `tbl_tran` SET stage= #{stage} , editBy=#{editBy} , editTime=#{editTime} where id=#{id}
+    </update>
 </mapper>

@@ -22,4 +22,8 @@
         #{tranId}
         )
     </insert>
+
+    <select id="getHistoryListByTranId" resultType="com.itheima.crm.workbench.pojo.TranHistory">
+        SELECT * FROM `tbl_tran_history` WHERE `tranId` = #{id} ORDER BY createTime DESC
+    </select>
 </mapper>

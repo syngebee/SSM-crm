@@ -32,7 +32,7 @@ public class MyFilter implements Filter {
 
         if (!isIgnore(request)){
             Object user = request.getSession().getAttribute("user");
-            System.out.println("拦截器执行,user值为: "+user);
+//            System.out.println("拦截器执行,user值为: "+user);
             if (user==null){
                 response.sendRedirect("/static/index.html");
             }
