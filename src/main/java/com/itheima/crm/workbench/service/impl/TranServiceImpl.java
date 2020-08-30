@@ -5,15 +5,18 @@ import com.itheima.crm.utils.UUIDUtil;
 import com.itheima.crm.workbench.dao.CustomerDao;
 import com.itheima.crm.workbench.dao.TranDao;
 import com.itheima.crm.workbench.dao.TranHistoryDao;
+import com.itheima.crm.workbench.dto.TransactionRequestDTO;
 import com.itheima.crm.workbench.pojo.Customer;
 import com.itheima.crm.workbench.pojo.Tran;
 import com.itheima.crm.workbench.pojo.TranHistory;
 import com.itheima.crm.workbench.service.TranService;
+import com.itheima.crm.workbench.vo.PaginationVO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class TranServiceImpl implements TranService {
@@ -113,6 +116,34 @@ public class TranServiceImpl implements TranService {
             flag=false;
         }
         return flag;
+
+    }
+
+    @Override
+    public PaginationVO getCharts() {
+        PaginationVO<Map<String, String>> pv = new PaginationVO<>();
+
+        int total =tranDao.getTotal();
+        List<Map<String,String>> dataList =tranDao.getTranSumByStage();
+
+        pv.setTotal(total);
+        pv.setDataList(dataList);
+
+        return pv;
+    }
+
+    @Override
+    public PaginationVO pageList(TransactionRequestDTO tDto) {
+        System.out.println(tDto);
+        //初始化返回值
+        PaginationVO<Tran> pv = new PaginationVO<>();
+        //赋值1
+        List<Tran> trans = tranDao.pageList(tDto);
+        pv.setDataList(trans);
+        //赋值2
+        int sum = tranDao.getSum(tDto);
+        pv.setTotal(sum);
+        return pv;
 
     }
 }

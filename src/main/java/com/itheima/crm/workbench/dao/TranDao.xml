@@ -86,4 +86,107 @@
     <update id="changeStage">
         UPDATE `tbl_tran` SET stage= #{stage} , editBy=#{editBy} , editTime=#{editTime} where id=#{id}
     </update>
+
+    <select id="pageList" resultType="com.itheima.crm.workbench.pojo.Tran">
+        SELECT
+        t.id,u.name `owner`,t.name,cus.name customerId,t.stage,t.type,t.source,con.fullname contactsId
+        FROM
+        `tbl_tran` t
+        LEFT JOIN
+        `tbl_user` u
+        ON
+        t.owner = u.id
+        LEFT JOIN
+        `tbl_customer` cus
+        ON
+        t.customerId = cus.id
+        LEFT JOIN
+        `tbl_contacts` con
+        ON
+        t.contactsId = con.id
+        <where>
+
+            <if test="stage!=null and stage != ''">
+                AND t.stage = #{stage}
+            </if>
+
+            <if test="type!=null and type != ''">
+                AND t.type = #{type}
+            </if>
+
+            <if test="source!=null and source != ''">
+                AND t.source = #{source}
+            </if>
+
+            <if test="owner!=null and owner != ''">
+                AND u.name like CONCAT('%',#{owner},'%')
+            </if>
+
+            <if test="tranName!=null and tranName != ''">
+                t.name like CONCAT('%',#{tranName},'%')
+            </if>
+
+            <if test="customerName!=null and customerName != ''">
+                AND cus.name like CONCAT('%',#{customerName},'%')
+            </if>
+
+            <if test="contact!=null and contact != ''">
+                AND con.fullname like CONCAT('%',#{contact},'%')
+            </if>
+
+        </where>
+
+        ORDER BY t.createTime DESC
+        limit #{skipCount},#{pageSize}
+    </select>
+
+    <select id="getSum" resultType="int">
+        SELECT
+        COUNT(*)
+        FROM
+        `tbl_tran` t
+        LEFT JOIN
+        `tbl_user` u
+        ON
+        t.owner = u.id
+        LEFT JOIN
+        `tbl_customer` cus
+        ON
+        t.customerId = cus.id
+        LEFT JOIN
+        `tbl_contacts` con
+        ON
+        t.contactsId = con.id
+        <where>
+
+            <if test="stage!=null and stage != ''">
+                AND t.stage = #{stage}
+            </if>
+
+            <if test="type!=null and type != ''">
+                AND t.type = #{type}
+            </if>
+
+            <if test="source!=null and source != ''">
+                AND t.source = #{source}
+            </if>
+
+            <if test="owner!=null and owner != ''">
+                AND u.name like CONCAT('%',#{owner},'%')
+            </if>
+
+            <if test="tranName!=null and tranName != ''">
+                t.name like CONCAT('%',#{tranName},'%')
+            </if>
+
+            <if test="customerName!=null and customerName != ''">
+                AND cus.name like CONCAT('%',#{customerName},'%')
+            </if>
+
+            <if test="contact!=null and contact != ''">
+                AND con.fullname like CONCAT('%',#{contact},'%')
+            </if>
+
+        </where>
+    </select>
 </mapper>

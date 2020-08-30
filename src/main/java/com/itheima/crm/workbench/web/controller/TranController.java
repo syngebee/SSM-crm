@@ -4,10 +4,12 @@ import com.itheima.crm.settings.pojo.User;
 import com.itheima.crm.settings.service.UserService;
 import com.itheima.crm.utils.DateTimeUtil;
 import com.itheima.crm.utils.UUIDUtil;
+import com.itheima.crm.workbench.dto.TransactionRequestDTO;
 import com.itheima.crm.workbench.pojo.Tran;
 import com.itheima.crm.workbench.pojo.TranHistory;
 import com.itheima.crm.workbench.service.CustomerService;
 import com.itheima.crm.workbench.service.TranService;
+import com.itheima.crm.workbench.vo.PaginationVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -110,7 +112,6 @@ public class TranController {
         tran.setEditTime(DateTimeUtil.getSysTime());
         tran.setEditBy(user.getName());
 
-
         Boolean flag = tranService.changeStage(tran);
 
         //前台还需要刷新可能性,重新拿一下
@@ -123,7 +124,22 @@ public class TranController {
         Map<String,Object> map = new HashMap<>();
         map.put("success",flag);
         map.put("tran",tran);
-
         return map;
+    }
+
+    @RequestMapping("/getCharts")
+    @ResponseBody
+    public PaginationVO getCharts(){
+        return tranService.getCharts();
+    }
+
+
+    @RequestMapping("/pageList")
+    @ResponseBody
+    public PaginationVO pageList(TransactionRequestDTO tDto){
+        int skipCount = (tDto.getPageNo() - 1) * tDto.getPageSize();
+        tDto.setSkipCount(skipCount);
+        System.out.println(tDto);
+        return tranService.pageList(tDto);
     }
 }
